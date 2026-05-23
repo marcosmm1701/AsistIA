@@ -4,23 +4,26 @@ import { motion } from 'framer-motion'
 import { useInView } from 'framer-motion'
 import { useRef } from 'react'
 
+// Problemas reales del sector descritos sin estadísticas inventadas.
+// Cada "headline" es una frase observacional o un dato fácil de verificar
+// por la propia clínica (mirar su WhatsApp y comprobarlo).
 const problems = [
   {
-    stat: '60%',
-    title: 'de los mensajes llegan fuera de tu horario',
+    headline: '22:43',
+    title: 'La hora a la que llegan los mensajes',
     description:
-      'Leads que escriben a las 22h, el domingo o en festivo. Sin respuesta, se van. Con AsistIA, cada mensaje tiene atención inmediata.',
+      'Las leads escriben en su tiempo libre: por las noches, los domingos, en festivos. Justo cuando tu equipo no está. Sin respuesta, se enfrían.',
     icon: (
       <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" />
       </svg>
     ),
   },
   {
-    stat: '5 min',
-    title: 'es todo lo que tienes para no perder una lead',
+    headline: 'Minutos',
+    title: 'Lo que tienes antes de que se enfríe la lead',
     description:
-      'Tras 5 minutos sin respuesta, el 78% de los leads contacta a la competencia. Tu agente responde en segundos, siempre.',
+      'Cualquier comercial te lo dirá: cuanto más tardas, menos cierras. Una lead que tarda horas en recibir respuesta ya está hablando con otra clínica.',
     icon: (
       <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
@@ -28,10 +31,10 @@ const problems = [
     ),
   },
   {
-    stat: '0',
-    title: 'personas de tu equipo pueden vender y tratar a la vez',
+    headline: 'A la vez',
+    title: 'Tratar pacientes y vender, imposible',
     description:
-      'Tu equipo es excepcional en tratamientos. La captación y cualificación de leads es trabajo del agente, no tuyo.',
+      'Tu equipo es excepcional en tratamientos. Pero nadie puede atender un paciente y contestar mensajes al mismo tiempo. Y a ti no te pagan por ser recepcionista.',
     icon: (
       <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
@@ -64,9 +67,9 @@ function ProblemCard({
           {problem.icon}
         </div>
 
-        {/* Stat */}
+        {/* Headline */}
         <div className="font-serif text-5xl font-semibold text-gradient-gold mb-3">
-          {problem.stat}
+          {problem.headline}
         </div>
 
         {/* Title */}
@@ -106,9 +109,9 @@ export default function Problems() {
             El problema
           </span>
           <h2 className="font-serif text-4xl md:text-5xl font-semibold text-[#f5f0e8] leading-tight">
-            Cada lead que no atiendes
+            Si no atiendes una lead,
             <br />
-            <span className="italic text-gradient-gold">es dinero que se va a la competencia</span>
+            <span className="italic text-gradient-gold">la atiende la clínica de al lado</span>
           </h2>
         </motion.div>
 

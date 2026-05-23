@@ -3,7 +3,7 @@ import Link from 'next/link'
 
 export const metadata: Metadata = {
   title: 'Política de Cookies',
-  description: 'Política de cookies de AsistIA. Información sobre las cookies que utilizamos.',
+  description: 'Política de cookies del sitio web AsistIA. No utilizamos cookies de seguimiento.',
 }
 
 export default function Cookies() {
@@ -15,91 +15,80 @@ export default function Cookies() {
         </Link>
 
         <h1 className="font-serif text-4xl font-semibold text-[#f5f0e8] mb-2">Política de Cookies</h1>
-        <p className="text-[#6b6258] text-sm mb-10">Última actualización: enero de 2025</p>
+        <p className="text-[#6b6258] text-sm mb-10">Última actualización: mayo de 2026</p>
 
         <div className="space-y-8 text-[#9a9080] text-sm leading-relaxed">
+
+          <section className="border border-[#c9a96e]/20 rounded-2xl bg-[#c9a96e]/5 p-6">
+            <h2 className="font-serif text-lg text-[#f5f0e8] mb-2 flex items-center gap-2">
+              <svg className="w-5 h-5 text-[#c9a96e]" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+              </svg>
+              Esta web no usa cookies
+            </h2>
+            <p className="text-[#e8dcc8] text-sm">
+              Decisión consciente: no instalamos cookies de seguimiento, no usamos
+              herramientas de analítica (Google Analytics u otras), ni cargamos píxeles
+              de redes sociales o de publicidad.
+            </p>
+          </section>
 
           <section>
             <h2 className="font-serif text-xl text-[#f5f0e8] mb-3">1. ¿Qué son las cookies?</h2>
             <p>
-              Las cookies son pequeños archivos de texto que los sitios web colocan en tu dispositivo
-              cuando los visitas. Se utilizan ampliamente para hacer funcionar los sitios web de manera más
-              eficiente y para proporcionar información a los propietarios del sitio.
+              Las cookies son pequeños archivos de texto que los sitios web almacenan en
+              tu dispositivo durante tu visita. Sirven habitualmente para recordar
+              preferencias, mantener sesiones iniciadas o hacer seguimiento de la
+              navegación.
             </p>
           </section>
 
           <section>
-            <h2 className="font-serif text-xl text-[#f5f0e8] mb-3">2. Cookies que utilizamos</h2>
-            <div className="border border-[#2a2520] rounded-xl overflow-hidden mt-3">
-              <table className="w-full text-xs">
-                <thead>
-                  <tr className="bg-[#141210] border-b border-[#2a2520]">
-                    <th className="text-left px-4 py-3 text-[#f5f0e8] font-medium">Nombre</th>
-                    <th className="text-left px-4 py-3 text-[#f5f0e8] font-medium">Tipo</th>
-                    <th className="text-left px-4 py-3 text-[#f5f0e8] font-medium">Finalidad</th>
-                    <th className="text-left px-4 py-3 text-[#f5f0e8] font-medium">Duración</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-[#2a2520]">
-                  <tr>
-                    <td className="px-4 py-3 text-[#e8dcc8]">_session</td>
-                    <td className="px-4 py-3">Técnica</td>
-                    <td className="px-4 py-3">Mantener la sesión del usuario</td>
-                    <td className="px-4 py-3">Sesión</td>
-                  </tr>
-                  <tr>
-                    <td className="px-4 py-3 text-[#e8dcc8]">_ga</td>
-                    <td className="px-4 py-3">Analítica</td>
-                    <td className="px-4 py-3">Google Analytics — análisis de tráfico anónimo</td>
-                    <td className="px-4 py-3">2 años</td>
-                  </tr>
-                  <tr>
-                    <td className="px-4 py-3 text-[#e8dcc8]">cookie_consent</td>
-                    <td className="px-4 py-3">Preferencia</td>
-                    <td className="px-4 py-3">Recordar la aceptación de cookies</td>
-                    <td className="px-4 py-3">1 año</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </section>
-
-          <section>
-            <h2 className="font-serif text-xl text-[#f5f0e8] mb-3">3. Cookies de terceros</h2>
+            <h2 className="font-serif text-xl text-[#f5f0e8] mb-3">2. Cookies en este sitio</h2>
             <p>
-              Este sitio web puede usar cookies de terceros como Google Analytics para analizar el tráfico
-              de forma anónima. Dichos terceros tienen sus propias políticas de privacidad sobre cómo usan
-              esta información.
+              Este sitio web es <strong className="text-[#e8dcc8]">una página estática</strong>{' '}
+              sin uso de cookies propias ni de terceros. En concreto:
+            </p>
+            <ul className="list-disc list-inside mt-3 space-y-1">
+              <li>No utilizamos Google Analytics, Meta Pixel ni ninguna herramienta de analítica.</li>
+              <li>No instalamos píxeles de seguimiento publicitario.</li>
+              <li>No almacenamos datos en tu navegador (ni cookies, ni localStorage, ni sessionStorage).</li>
+              <li>Las fuentes tipográficas se sirven desde nuestro propio dominio (no desde fonts.googleapis.com), así que Google no recibe información de tu visita.</li>
+            </ul>
+            <p className="mt-3 text-[#6b6258]">
+              Por este motivo no mostramos banner de cookies: no hay nada que aceptar ni
+              rechazar.
             </p>
           </section>
 
           <section>
-            <h2 className="font-serif text-xl text-[#f5f0e8] mb-3">4. Cómo controlar las cookies</h2>
+            <h2 className="font-serif text-xl text-[#f5f0e8] mb-3">3. Servicios de terceros</h2>
             <p>
-              Puedes controlar y/o eliminar las cookies cuando lo desees. Puedes eliminar todas las cookies
-              que ya están en tu ordenador y configurar la mayoría de los navegadores para que no las
-              admitan. Sin embargo, si lo haces, es posible que tengas que ajustar manualmente algunas
-              preferencias cada vez que visites el sitio.
+              Algunos componentes técnicos del sitio pueden, por su naturaleza, generar
+              registros estándar:
             </p>
-            <p className="mt-3">
-              Puedes gestionar las cookies a través de la configuración de tu navegador:
-            </p>
-            <ul className="list-disc list-inside mt-2 space-y-1">
-              <li>Chrome: Configuración → Privacidad y seguridad → Cookies</li>
-              <li>Firefox: Opciones → Privacidad y seguridad</li>
-              <li>Safari: Preferencias → Privacidad</li>
-              <li>Edge: Configuración → Privacidad, búsqueda y servicios</li>
+            <ul className="list-disc list-inside mt-3 space-y-1">
+              <li><strong className="text-[#e8dcc8]">Cloudflare</strong> (alojamiento) puede registrar logs técnicos (dirección IP, user-agent) durante un tiempo limitado por motivos de seguridad y protección frente a ataques. Esta información no se utiliza para hacer perfil de usuario.</li>
             </ul>
           </section>
 
           <section>
-            <h2 className="font-serif text-xl text-[#f5f0e8] mb-3">5. Más información</h2>
+            <h2 className="font-serif text-xl text-[#f5f0e8] mb-3">4. Cambios futuros</h2>
             <p>
-              Si tienes preguntas sobre nuestra política de cookies, puedes contactarnos en{' '}
-              <a href="mailto:hola@asistia.es" className="text-[#c9a96e] hover:underline">
-                hola@asistia.es
-              </a>
-              .
+              Si en el futuro decidimos incorporar herramientas que sí utilicen cookies,
+              actualizaremos esta política y mostraremos el correspondiente banner de
+              consentimiento conforme a la normativa AEPD vigente, antes de instalar
+              ninguna cookie no estrictamente técnica.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="font-serif text-xl text-[#f5f0e8] mb-3">5. Contacto</h2>
+            <p>
+              Si tienes preguntas sobre esta política, escríbenos a{' '}
+              <a href="mailto:hola@asistiapp.com" className="text-[#c9a96e] hover:underline">
+                hola@asistiapp.com
+              </a>.
             </p>
           </section>
         </div>

@@ -35,19 +35,20 @@ export default function CTAFinal({ onOpenModal }: CTAFinalProps) {
           <div className="relative z-10 text-center py-16 md:py-20 px-8">
             {/* Label */}
             <span className="text-xs text-[#c9a96e] font-medium tracking-widest uppercase mb-6 block">
-              Última pregunta
+              Estamos arrancando
             </span>
 
             {/* Headline */}
             <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-semibold text-[#f5f0e8] leading-tight mb-6">
-              ¿Tu competencia
+              Buscamos clínicas
               <br />
-              <span className="italic text-gradient-gold">ya lo está usando?</span>
+              <span className="italic text-gradient-gold">fundadoras.</span>
             </h2>
 
             <p className="text-[#9a9080] text-lg max-w-lg mx-auto mb-10 leading-relaxed">
-              Cada semana que pasa sin atender leads automáticamente son pacientes que
-              van a otra clínica. El primer mes es gratis. No hay excusa para no probarlo.
+              AsistIA está abriendo plazas para clínicas piloto en Madrid y Barcelona.
+              A cambio de tu feedback en los primeros meses, te quedas con tarifa
+              fundadora de por vida. Primer mes gratis, sin permanencia.
             </p>
 
             {/* CTA */}
@@ -55,7 +56,7 @@ export default function CTAFinal({ onOpenModal }: CTAFinalProps) {
               onClick={onOpenModal}
               className="group relative inline-flex items-center gap-3 bg-[#c9a96e] hover:bg-[#dbbe8a] text-[#0f0e0d] font-semibold px-10 py-5 rounded-2xl text-lg transition-all duration-200 hover:shadow-2xl hover:shadow-[#c9a96e]/30 hover:-translate-y-1"
             >
-              Reserva tu demo gratuita
+              Quiero ser clínica fundadora
               <span className="transition-transform group-hover:translate-x-1">→</span>
             </button>
 
@@ -64,16 +65,16 @@ export default function CTAFinal({ onOpenModal }: CTAFinalProps) {
               Sin compromiso · Primer mes gratis · Activo en 48h
             </p>
 
-            {/* Bottom divider */}
-            <div className="flex items-center justify-center gap-6 mt-12 pt-10 border-t border-[#2a2520]">
+            {/* Bottom reasegurances — todo verificable, sin números inventados */}
+            <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-4 mt-12 pt-10 border-t border-[#2a2520]">
               {[
-                { label: 'Clínicas activas', value: '12+' },
-                { label: 'Leads atendidos', value: '4.800+' },
-                { label: 'Citas generadas', value: '310+' },
-              ].map((stat, i) => (
-                <div key={i} className="text-center">
-                  <div className="font-serif text-2xl font-semibold text-[#c9a96e]">{stat.value}</div>
-                  <div className="text-xs text-[#6b6258]">{stat.label}</div>
+                { label: 'Hecho en España', icon: '🇪🇸' },
+                { label: 'Soporte en español', icon: '💬' },
+                { label: 'Sin permanencia', icon: '✓' },
+              ].map((item, i) => (
+                <div key={i} className="flex items-center gap-2 text-sm text-[#9a9080]">
+                  <span>{item.icon}</span>
+                  <span>{item.label}</span>
                 </div>
               ))}
             </div>

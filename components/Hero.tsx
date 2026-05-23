@@ -8,7 +8,10 @@ interface HeroProps {
 
 export default function Hero({ onOpenModal }: HeroProps) {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden px-6">
+    // pt-* solo en portátiles cortos (ancho >= 768px y alto <= 900px) para
+    // que el badge no quede pisado por la navbar fija. En móvil y en
+    // monitores grandes (alto > 900) el centrado vertical funciona bien.
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden px-6 [@media(min-width:768px)_and_(max-height:900px)]:pt-24">
       {/* Background gradient */}
       <div className="absolute inset-0 bg-[#0f0e0d]">
         <div className="absolute inset-0 bg-gradient-radial from-[#c9a96e]/8 via-transparent to-transparent" />

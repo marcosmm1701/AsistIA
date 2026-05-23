@@ -99,7 +99,22 @@ export default function Navbar({ onOpenModal }: NavbarProps) {
                 <a
                   key={link.href}
                   href={link.href}
-                  onClick={() => setMenuOpen(false)}
+                  onClick={(e) => {
+                    // Evitamos el scroll nativo del ancla: si lo hacemos a la
+                    // vez que cerramos el menú (height anim), el navegador
+                    // calcula mal el offset porque la altura del documento
+                    // cambia durante la animación. Scrolleamos a mano tras
+                    // dejar que la salida del menú termine.
+                    e.preventDefault()
+                    setMenuOpen(false)
+                    const id = link.href.replace('#', '')
+                    setTimeout(() => {
+                      const target = document.getElementById(id)
+                      if (target) {
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                      }
+                    }, 320)
+                  }}
                   className="text-[#9a9080] hover:text-[#f5f0e8] transition-colors py-1"
                 >
                   {link.label}

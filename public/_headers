@@ -1,9 +1,11 @@
 /*
-  # === Seguridad de transporte ===
-  # Fuerza HTTPS durante 2 años, incluye subdominios y solicita inclusión en
-  # la lista de precarga HSTS de los navegadores. Solo activar cuando el
-  # dominio definitivo esté en HTTPS estable.
-  Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
+  # === Seguridad de transporte (HSTS) ===
+  # Empezamos con 6 meses y SIN preload para poder revertir si algo va mal.
+  # Cuando el dominio definitivo lleve 1-2 meses estable, sube a:
+  #   max-age=63072000; includeSubDomains; preload
+  # y registra el dominio en https://hstspreload.org (compromiso de 2 años,
+  # difícil de revertir, requiere HTTPS perfecto en TODOS los subdominios).
+  Strict-Transport-Security: max-age=15552000; includeSubDomains
 
   # === Content Security Policy ===
   # Política estricta: solo cargamos recursos del propio dominio.

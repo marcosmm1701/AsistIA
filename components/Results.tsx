@@ -1,90 +1,77 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
 
-function useCounter(target: number, duration: number, start: boolean) {
-  const [count, setCount] = useState(0)
-
-  useEffect(() => {
-    if (!start) return
-    let startTime: number | null = null
-    const step = (timestamp: number) => {
-      if (!startTime) startTime = timestamp
-      const progress = Math.min((timestamp - startTime) / duration, 1)
-      const eased = 1 - Math.pow(1 - progress, 3) // ease-out cubic
-      setCount(Math.floor(eased * target))
-      if (progress < 1) requestAnimationFrame(step)
-    }
-    requestAnimationFrame(step)
-  }, [start, target, duration])
-
-  return count
-}
-
-const metrics = [
+// Tres promesas de producto, verificables y reales (no estadísticas).
+// Cada una corresponde a una característica concreta del servicio:
+//  - Respuesta automática 24/7
+//  - Cualificación con vocabulario del sector
+//  - Onboarding gratuito en 48h
+const promises = [
   {
-    prefix: '+',
-    value: 73,
-    suffix: '%',
-    label: 'de leads atendidos en menos de 1 minuto',
-    description: 'Frente al 12% de media en clínicas sin automatización',
+    headline: 'Segundos',
+    label: 'Tiempo de respuesta a tus leads',
+    description: 'Cada mensaje que entra por WhatsApp o Instagram tiene contestación inmediata. Sin colas, sin "te respondemos mañana".',
+    icon: (
+      <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+      </svg>
+    ),
   },
   {
-    prefix: '',
-    value: 8,
-    suffix: '',
-    label: 'pacientes nuevos/mes de media por clínica',
-    description: 'Entre 3 y 8 pacientes adicionales mensual, según volumen de leads',
+    headline: '24/7',
+    label: 'Disponibilidad sin parar',
+    description: 'Noches, festivos, domingos a las 3 de la mañana. Tu clínica nunca se queda sin atender un mensaje.',
+    icon: (
+      <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+    ),
   },
   {
-    prefix: '',
-    value: 0,
-    suffix: '€',
-    label: 'coste de setup, activo en 48 horas',
-    description: 'Integración completa incluida. Sin inversión inicial.',
+    headline: '48 h',
+    label: 'Y activo · sin coste de setup',
+    description: 'Te configuramos el agente, lo entrenamos con tus tratamientos y tu tono, y queda funcionando. Sin inversión inicial.',
+    icon: (
+      <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z" />
+      </svg>
+    ),
   },
 ]
 
-function MetricCard({
-  metric,
+function PromiseCard({
+  promise,
   index,
-  started,
+  inView,
 }: {
-  metric: (typeof metrics)[0]
+  promise: (typeof promises)[0]
   index: number
-  started: boolean
+  inView: boolean
 }) {
-  const count = useCounter(metric.value, 2000, started)
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
-      animate={started ? { opacity: 1, y: 0 } : {}}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.7, delay: index * 0.15 }}
-      className="text-center"
+      className="text-center px-4"
     >
-      {/* Number */}
-      <div className="font-serif text-6xl md:text-7xl font-semibold text-gradient-gold mb-3">
-        {metric.prefix}
-        {count}
-        {metric.suffix}
+      <div className="inline-flex w-14 h-14 rounded-2xl bg-[#c9a96e]/10 border border-[#c9a96e]/20 items-center justify-center text-[#c9a96e] mb-6">
+        {promise.icon}
       </div>
 
-      {/* Label */}
-      <p className="text-[#f5f0e8] font-medium text-base md:text-lg mb-2 max-w-[200px] mx-auto leading-tight">
-        {metric.label}
+      <div className="font-serif text-5xl md:text-6xl font-semibold text-gradient-gold mb-2">
+        {promise.headline}
+      </div>
+
+      <p className="text-[#f5f0e8] font-medium text-base md:text-lg mb-3 max-w-[240px] mx-auto leading-tight">
+        {promise.label}
       </p>
 
-      {/* Description */}
-      <p className="text-[#6b6258] text-sm max-w-[220px] mx-auto">
-        {metric.description}
+      <p className="text-[#9a9080] text-sm max-w-[260px] mx-auto leading-relaxed">
+        {promise.description}
       </p>
-
-      {/* Divider (not on last) */}
-      {index < metrics.length - 1 && (
-        <div className="hidden md:block absolute right-0 top-1/2 -translate-y-1/2 w-px h-24 bg-[#2a2520]" />
-      )}
     </motion.div>
   )
 }
@@ -96,7 +83,6 @@ export default function Results() {
   return (
     <section id="resultados" className="section-padding px-6">
       <div className="max-w-6xl mx-auto">
-        {/* Header */}
         <motion.div
           ref={ref}
           initial={{ opacity: 0, y: 20 }}
@@ -105,32 +91,29 @@ export default function Results() {
           className="text-center mb-16"
         >
           <span className="text-xs text-[#c9a96e] font-medium tracking-widest uppercase mb-4 block">
-            Resultados
+            La diferencia
           </span>
           <h2 className="font-serif text-4xl md:text-5xl font-semibold text-[#f5f0e8] leading-tight">
-            Números que hablan
+            Sin promesas vacías.
             <br />
-            <span className="italic text-gradient-gold">por sí solos</span>
+            <span className="italic text-gradient-gold">Lo que hace, lo hace.</span>
           </h2>
+          <p className="text-[#9a9080] text-base mt-4 max-w-xl mx-auto">
+            Tres cosas concretas y verificables. Nada de métricas inventadas.
+          </p>
         </motion.div>
 
-        {/* Metrics */}
-        <div className="border border-[#2a2520] rounded-2xl bg-[#141210] px-8 py-12">
+        <div className="border border-[#2a2520] rounded-2xl bg-[#141210] px-6 py-14 md:py-16">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-0 relative">
-            {metrics.map((metric, i) => (
+            {promises.map((promise, i) => (
               <div key={i} className="relative">
-                <MetricCard metric={metric} index={i} started={isInView} />
-                {i < metrics.length - 1 && (
-                  <div className="hidden md:block absolute right-0 top-1/2 -translate-y-1/2 w-px h-20 bg-[#2a2520]" />
+                <PromiseCard promise={promise} index={i} inView={isInView} />
+                {i < promises.length - 1 && (
+                  <div className="hidden md:block absolute right-0 top-1/2 -translate-y-1/2 w-px h-24 bg-[#2a2520]" />
                 )}
               </div>
             ))}
           </div>
-
-          {/* Disclaimer */}
-          <p className="text-center text-xs text-[#6b6258] mt-10 pt-6 border-t border-[#2a2520]">
-            * Datos basados en resultados de clínicas piloto durante los primeros 3 meses de uso
-          </p>
         </div>
       </div>
     </section>

@@ -111,7 +111,7 @@ export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
       if (!res.ok) {
         // No mostramos detalles del backend al usuario (fail closed).
         setSubmitError(
-          'No hemos podido enviar tu solicitud. Inténtalo en unos minutos o escríbenos a hola@asistia.es',
+          'No hemos podido enviar tu solicitud. Inténtalo en unos minutos o escríbenos a hola@asistiapp.com',
         )
         setSubmitting(false)
         return
@@ -121,7 +121,7 @@ export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
       setSubmitted(true)
     } catch {
       setSubmitError(
-        'Error de conexión. Comprueba tu red e inténtalo de nuevo, o escríbenos a hola@asistia.es',
+        'Error de conexión. Comprueba tu red e inténtalo de nuevo, o escríbenos a hola@asistiapp.com',
       )
       setSubmitting(false)
     }
@@ -156,13 +156,16 @@ export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
             className="fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none"
           >
             <div
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="demo-modal-title"
               className="bg-[#141210] border border-[#2a2520] rounded-3xl w-full max-w-lg shadow-2xl shadow-black/60 pointer-events-auto max-h-[90vh] overflow-y-auto"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Header */}
               <div className="flex items-start justify-between p-8 pb-0">
                 <div>
-                  <h2 className="font-serif text-2xl font-semibold text-[#f5f0e8] mb-1">
+                  <h2 id="demo-modal-title" className="font-serif text-2xl font-semibold text-[#f5f0e8] mb-1">
                     {submitted ? '¡Perfecto! 🎉' : 'Solicita tu demo gratuita'}
                   </h2>
                   <p className="text-[#9a9080] text-sm">

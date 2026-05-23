@@ -129,4 +129,4 @@ En **menos de 2 segundos** debes recibir un mensaje en Telegram tipo:
 
 ## Cuando tengas dominio propio
 
-Cuando vincules `asistia.es` (o el que sea), **acuérdate de actualizar `ALLOWED_ORIGIN`** en las variables de entorno, o el formulario empezará a devolver 403 desde el nuevo dominio.
+Cuando vincules `asistiapp.com` (o el que sea), **acuérdate de actualizar `ALLOWED_ORIGIN`** en las variables de entorno, o el formulario empezará a devolver 403 desde el nuevo dominio.

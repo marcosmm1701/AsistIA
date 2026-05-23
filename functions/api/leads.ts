@@ -16,7 +16,7 @@
  * Variables de entorno requeridas (configurar en Cloudflare Pages):
  *  - TELEGRAM_BOT_TOKEN: token de tu bot (de @BotFather)
  *  - TELEGRAM_CHAT_ID:   tu chat_id (numérico)
- *  - ALLOWED_ORIGIN:     URL de origen permitida, p.ej. https://asistia.es
+ *  - ALLOWED_ORIGIN:     URL de origen permitida, p.ej. https://asistiapp.com
  */
 
 interface Env {
@@ -124,16 +124,7 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
   }
   const allowed = parseAllowedOrigins(env.ALLOWED_ORIGIN)
   if (!origin || !allowed.includes(origin)) {
-    return json(
-      403,
-      {
-        ok: false,
-        error: 'forbidden',
-        // Pista útil solo para depurar el setup inicial (no filtra secretos).
-        debug: { receivedOrigin: rawOrigin, allowedOrigins: allowed },
-      },
-      null,
-    )
+    return json(403, { ok: false, error: 'forbidden' }, null)
   }
 
   // 2. Content-Type obligatorio (mitiga form-based CSRF).

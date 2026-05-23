@@ -29,13 +29,13 @@ export default function Footer() {
           {/* Contact + Social */}
           <div className="flex items-center gap-4">
             <a
-              href="mailto:hola@asistia.es"
+              href="mailto:hola@asistiapp.com"
               className="text-[#6b6258] hover:text-[#9a9080] transition-colors text-sm"
             >
-              hola@asistia.es
+              hola@asistiapp.com
             </a>
             <a
-              href="https://instagram.com/asistia.es"
+              href="https://instagram.com/asistiapp"
               target="_blank"
               rel="noopener noreferrer"
               className="text-[#6b6258] hover:text-[#c9a96e] transition-colors"
@@ -51,7 +51,7 @@ export default function Footer() {
         {/* Bottom */}
         <div className="border-t border-[#2a2520] mt-8 pt-6 text-center">
           <p className="text-[#6b6258] text-xs">
-            © {currentYear} AsistIA · Todos los derechos reservados · Madrid, España
+            © {currentYear} AsistIA · Todos los derechos reservados · Hecho en España
           </p>
         </div>
       </div>

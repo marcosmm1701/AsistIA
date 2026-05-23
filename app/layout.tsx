@@ -24,7 +24,7 @@ const playfair = Playfair_Display({
 })
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://asistia.es'),
+  metadataBase: new URL('https://asistiapp.com'),
   title: {
     default: 'AsistIA — Agente IA para Clínicas de Medicina Estética',
     template: '%s | AsistIA',
@@ -39,31 +39,23 @@ export const metadata: Metadata = {
     'automatización leads estética',
     'inteligencia artificial clínica',
   ],
-  authors: [{ name: 'AsistIA', url: 'https://asistia.es' }],
+  authors: [{ name: 'AsistIA', url: 'https://asistiapp.com' }],
   creator: 'AsistIA',
   openGraph: {
     type: 'website',
     locale: 'es_ES',
-    url: 'https://asistia.es',
+    url: 'https://asistiapp.com',
     siteName: 'AsistIA',
     title: 'AsistIA — Tu clínica vende mientras tú duermes',
     description:
       'Agente IA especializado en medicina estética. Convierte leads de WhatsApp e Instagram en pacientes a cualquier hora. Primer mes gratis.',
-    images: [
-      {
-        url: '/og-image.jpg',
-        width: 1200,
-        height: 630,
-        alt: 'AsistIA — Agente IA para Medicina Estética',
-      },
-    ],
+    // La imagen OG la genera /app/opengraph-image.tsx automáticamente.
   },
   twitter: {
     card: 'summary_large_image',
     title: 'AsistIA — Tu clínica vende mientras tú duermes',
     description:
       'Agente IA especializado en medicina estética. Convierte leads de WhatsApp en pacientes 24/7.',
-    images: ['/og-image.jpg'],
   },
   robots: {
     index: true,
@@ -115,15 +107,15 @@ export default function RootLayout({
               provider: {
                 '@type': 'Organization',
                 name: 'AsistIA',
-                address: {
-                  '@type': 'PostalAddress',
-                  addressLocality: 'Madrid',
-                  addressCountry: 'ES',
+                url: 'https://asistiapp.com',
+                areaServed: {
+                  '@type': 'Country',
+                  name: 'España',
                 },
                 contactPoint: {
                   '@type': 'ContactPoint',
                   contactType: 'customer service',
-                  email: 'hola@asistia.es',
+                  email: 'hola@asistiapp.com',
                   availableLanguage: 'Spanish',
                 },
               },
