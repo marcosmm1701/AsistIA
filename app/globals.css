@@ -1,4 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap');
+/* Las fuentes Inter y Playfair Display se cargan con next/font/google
+   (ver app/layout.tsx) y se sirven desde nuestro propio dominio. NO
+   importamos desde fonts.googleapis.com — evita fugas de IP a Google
+   y permite una Content-Security-Policy estricta. */
 
 @tailwind base;
 @tailwind components;
@@ -25,7 +28,7 @@ html {
 body {
   background-color: #0f0e0d;
   color: #f5f0e8;
-  font-family: 'Inter', system-ui, sans-serif;
+  font-family: var(--font-inter), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

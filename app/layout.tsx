@@ -1,5 +1,27 @@
 import type { Metadata } from 'next'
+import { Inter, Playfair_Display } from 'next/font/google'
 import './globals.css'
+
+// next/font descarga las fuentes en BUILD TIME y las sirve desde nuestro
+// propio dominio. Beneficios:
+//  1. Sin requests a fonts.googleapis.com → Google ya no ve la IP de cada
+//     visitante (cumplimiento RGPD, ver caso DSGVO Alemania 2022).
+//  2. Sin third-party que pueda ser comprometida → CSP puede ser estricta.
+//  3. Performance: una conexión DNS menos, fuentes self-hosted con
+//     Cache-Control immutable.
+const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-inter',
+})
+
+const playfair = Playfair_Display({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-playfair',
+  weight: ['400', '500', '600', '700'],
+  style: ['normal', 'italic'],
+})
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://asistia.es'),
@@ -51,6 +73,13 @@ export const metadata: Metadata = {
       follow: true,
     },
   },
+  // Bloquea formatos legacy de detección de número de teléfono en iOS Safari
+  // que pueden reescribir contenido en runtime.
+  formatDetection: {
+    telephone: false,
+    email: false,
+    address: false,
+  },
 }
 
 export default function RootLayout({
@@ -59,14 +88,11 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="es" suppressHydrationWarning>
+    <html lang="es" className={`${inter.variable} ${playfair.variable}`} suppressHydrationWarning>
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap"
-          rel="stylesheet"
-        />
+        {/* JSON-LD Schema.org. Contenido 100% estático y controlado por el
+            código fuente: no hay user-input que pueda escapar a este bloque,
+            por lo que dangerouslySetInnerHTML es seguro aquí. */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -105,7 +131,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body>{children}</body>
+      <body className={inter.className}>{children}</body>
     </html>
   )
 }

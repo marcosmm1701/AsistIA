@@ -12,7 +12,17 @@ interface FormData {
   email: string
   ciudad: string
   leads: string
+  // Honeypot — debe quedar vacío. Si llega con contenido, es un bot.
+  website: string
 }
+
+// Sanitización defensiva: elimina CR/LF (vector de inyección de cabeceras
+// mailto y de splitting en logs) y trunca para evitar payloads enormes.
+function sanitizeField(value: string, maxLen: number): string {
+  return value.replace(/[\r\n\t\0]/g, ' ').trim().slice(0, maxLen)
+}
+
+const LEAD_OPTIONS = ['menos-20', '20-50', '50-100', 'mas-100'] as const
 
 interface DemoModalProps {
   isOpen: boolean
@@ -22,6 +32,7 @@ interface DemoModalProps {
 export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
   const [submitted, setSubmitted] = useState(false)
   const [submitting, setSubmitting] = useState(false)
+  const [submitError, setSubmitError] = useState<string | null>(null)
   const overlayRef = useRef<HTMLDivElement>(null)
 
   const {
@@ -54,28 +65,66 @@ export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
     onClose()
     setTimeout(() => {
       setSubmitted(false)
+      setSubmitError(null)
       reset()
     }, 300)
   }
 
   async function onSubmit(data: FormData) {
+    setSubmitError(null)
+
+    // Honeypot anti-bot: si el campo invisible viene relleno, fingimos éxito
+    // y descartamos. El servidor también lo descarta por su cuenta.
+    if (data.website && data.website.length > 0) {
+      setSubmitted(true)
+      return
+    }
+
     setSubmitting(true)
 
-    // Build mailto link as fallback — replace with your API/n8n endpoint
-    const body = Object.entries(data)
-      .map(([k, v]) => `${k}: ${v}`)
-      .join('%0A')
+    // Allow-list para el campo enum (defensa frente a manipulación del DOM).
+    const leads = (LEAD_OPTIONS as readonly string[]).includes(data.leads)
+      ? data.leads
+      : ''
 
-    // Option A: Send to a simple endpoint (uncomment and configure)
-    // await fetch('/api/leads', { method: 'POST', body: JSON.stringify(data), headers: { 'Content-Type': 'application/json' } })
+    // Sanitización cliente. La sanitización REAL ocurre en el servidor
+    // (functions/api/leads.ts) — esto es solo defensa en profundidad para
+    // que el payload que viaja por la red ya esté limpio.
+    const safe = {
+      nombre: sanitizeField(data.nombre, 60),
+      clinica: sanitizeField(data.clinica, 80),
+      telefono: sanitizeField(data.telefono, 20),
+      email: sanitizeField(data.email, 100),
+      ciudad: sanitizeField(data.ciudad, 40),
+      leads: sanitizeField(leads, 20),
+    }
 
-    // Option B: Open mailto (works without backend)
-    window.location.href = `mailto:hola@asistia.es?subject=Demo%20gratuita%20-%20${encodeURIComponent(data.clinica)}&body=${body}`
+    // POST al endpoint propio (Cloudflare Pages Function en /api/leads).
+    // El token de Telegram vive ahí, NUNCA en el navegador.
+    try {
+      const res = await fetch('/api/leads', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(safe),
+      })
 
-    setTimeout(() => {
+      if (!res.ok) {
+        // No mostramos detalles del backend al usuario (fail closed).
+        setSubmitError(
+          'No hemos podido enviar tu solicitud. Inténtalo en unos minutos o escríbenos a hola@asistia.es',
+        )
+        setSubmitting(false)
+        return
+      }
+
       setSubmitting(false)
       setSubmitted(true)
-    }, 600)
+    } catch {
+      setSubmitError(
+        'Error de conexión. Comprueba tu red e inténtalo de nuevo, o escríbenos a hola@asistia.es',
+      )
+      setSubmitting(false)
+    }
   }
 
   const inputClass =
@@ -155,14 +204,47 @@ export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
                   </div>
                 ) : (
                   /* Form */
-                  <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+                  <form onSubmit={handleSubmit(onSubmit)} className="space-y-4" noValidate>
+                    {/* Honeypot anti-bot: oculto a usuarios reales, los bots lo rellenan.
+                        autoComplete="off" + tabIndex=-1 + aria-hidden para que ningún
+                        lector de pantalla ni usuario por teclado caiga sobre él. */}
+                    <div
+                      aria-hidden="true"
+                      style={{
+                        position: 'absolute',
+                        left: '-9999px',
+                        top: 'auto',
+                        width: '1px',
+                        height: '1px',
+                        overflow: 'hidden',
+                      }}
+                    >
+                      <label htmlFor="website">No rellenar</label>
+                      <input
+                        type="text"
+                        id="website"
+                        tabIndex={-1}
+                        autoComplete="off"
+                        {...register('website')}
+                      />
+                    </div>
+
                     {/* Nombre + Clínica */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
                         <label className="text-xs text-[#9a9080] mb-1.5 block">Tu nombre *</label>
                         <input
-                          {...register('nombre', { required: 'Campo obligatorio' })}
+                          {...register('nombre', {
+                            required: 'Campo obligatorio',
+                            maxLength: { value: 60, message: 'Máximo 60 caracteres' },
+                            pattern: {
+                              value: /^[\p{L}\s'.-]{2,60}$/u,
+                              message: 'Solo letras, espacios, guiones y apóstrofes',
+                            },
+                          })}
                           placeholder="Ana García"
+                          maxLength={60}
+                          autoComplete="name"
                           className={inputClass}
                         />
                         {errors.nombre && <p className={errorClass}>{errors.nombre.message}</p>}
@@ -170,8 +252,17 @@ export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
                       <div>
                         <label className="text-xs text-[#9a9080] mb-1.5 block">Nombre de la clínica *</label>
                         <input
-                          {...register('clinica', { required: 'Campo obligatorio' })}
+                          {...register('clinica', {
+                            required: 'Campo obligatorio',
+                            maxLength: { value: 80, message: 'Máximo 80 caracteres' },
+                            pattern: {
+                              value: /^[\p{L}\p{N}\s&.,'-]{2,80}$/u,
+                              message: 'Caracteres no permitidos',
+                            },
+                          })}
                           placeholder="Clínica Estética Belleza"
+                          maxLength={80}
+                          autoComplete="organization"
                           className={inputClass}
                         />
                         {errors.clinica && <p className={errorClass}>{errors.clinica.message}</p>}
@@ -184,13 +275,17 @@ export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
                       <input
                         {...register('telefono', {
                           required: 'Campo obligatorio',
+                          maxLength: { value: 20, message: 'Máximo 20 caracteres' },
                           pattern: {
-                            value: /^[+\d\s()-]{9,15}$/,
+                            value: /^[+\d\s()-]{9,20}$/,
                             message: 'Introduce un teléfono válido',
                           },
                         })}
                         placeholder="+34 600 000 000"
                         type="tel"
+                        maxLength={20}
+                        inputMode="tel"
+                        autoComplete="tel"
                         className={inputClass}
                       />
                       {errors.telefono && <p className={errorClass}>{errors.telefono.message}</p>}
@@ -202,13 +297,17 @@ export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
                       <input
                         {...register('email', {
                           required: 'Campo obligatorio',
+                          maxLength: { value: 100, message: 'Máximo 100 caracteres' },
                           pattern: {
-                            value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                            value: /^[^\s@<>"'`;()]+@[^\s@<>"'`;()]+\.[^\s@<>"'`;()]{2,}$/,
                             message: 'Introduce un email válido',
                           },
                         })}
                         placeholder="ana@clinicabelleza.es"
                         type="email"
+                        maxLength={100}
+                        inputMode="email"
+                        autoComplete="email"
                         className={inputClass}
                       />
                       {errors.email && <p className={errorClass}>{errors.email.message}</p>}
@@ -219,8 +318,17 @@ export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
                       <div>
                         <label className="text-xs text-[#9a9080] mb-1.5 block">Ciudad *</label>
                         <input
-                          {...register('ciudad', { required: 'Campo obligatorio' })}
+                          {...register('ciudad', {
+                            required: 'Campo obligatorio',
+                            maxLength: { value: 40, message: 'Máximo 40 caracteres' },
+                            pattern: {
+                              value: /^[\p{L}\s'-]{2,40}$/u,
+                              message: 'Solo letras y espacios',
+                            },
+                          })}
                           placeholder="Madrid"
+                          maxLength={40}
+                          autoComplete="address-level2"
                           className={inputClass}
                         />
                         {errors.ciudad && <p className={errorClass}>{errors.ciudad.message}</p>}
@@ -228,7 +336,12 @@ export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
                       <div>
                         <label className="text-xs text-[#9a9080] mb-1.5 block">Leads/mes por WhatsApp *</label>
                         <select
-                          {...register('leads', { required: 'Campo obligatorio' })}
+                          {...register('leads', {
+                            required: 'Campo obligatorio',
+                            validate: (v) =>
+                              (LEAD_OPTIONS as readonly string[]).includes(v) ||
+                              'Selecciona una opción válida',
+                          })}
                           className={`${inputClass} appearance-none cursor-pointer`}
                           defaultValue=""
                         >
@@ -245,11 +358,23 @@ export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
                     {/* Privacy note */}
                     <p className="text-[#6b6258] text-xs leading-relaxed">
                       Al enviar aceptas nuestra{' '}
-                      <a href="/privacidad" className="underline hover:text-[#9a9080]" target="_blank">
+                      <a
+                        href="/privacidad"
+                        className="underline hover:text-[#9a9080]"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
                         Política de Privacidad
                       </a>
                       . Tus datos solo se usarán para contactarte sobre la demo.
                     </p>
+
+                    {/* Submit error (server / red) */}
+                    {submitError && (
+                      <div className="rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-xs text-red-300">
+                        {submitError}
+                      </div>
+                    )}
 
                     {/* Submit */}
                     <button

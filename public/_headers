@@ -1,0 +1,61 @@
+/*
+  # === Seguridad de transporte ===
+  # Fuerza HTTPS durante 2 años, incluye subdominios y solicita inclusión en
+  # la lista de precarga HSTS de los navegadores. Solo activar cuando el
+  # dominio definitivo esté en HTTPS estable.
+  Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
+
+  # === Content Security Policy ===
+  # Política estricta: solo cargamos recursos del propio dominio.
+  # - script-src 'self' 'unsafe-inline': el 'unsafe-inline' es necesario
+  #   únicamente para el bloque JSON-LD de Schema.org (estático, controlado).
+  # - style-src 'self' 'unsafe-inline': Tailwind y Framer Motion generan
+  #   estilos inline en runtime; aceptable en sitio sin user-generated content.
+  # - frame-ancestors 'none': impide que la web sea embebida en iframes
+  #   (anti-clickjacking, equivalente a X-Frame-Options: DENY).
+  # - form-action 'self' mailto:: solo permite enviar formularios al propio
+  #   dominio o a clientes de correo (necesario por el fallback mailto).
+  # - upgrade-insecure-requests: si algún recurso quedara en http://, lo
+  #   reescribe a https:// en lugar de bloquearlo.
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self' mailto:; frame-ancestors 'none'; upgrade-insecure-requests
+
+  # === Anti-clickjacking (legacy, complementa CSP frame-ancestors) ===
+  X-Frame-Options: DENY
+
+  # === Anti MIME-sniffing ===
+  # Impide que el navegador "adivine" el tipo MIME de un recurso, evitando
+  # ataques donde un fichero subido como imagen se ejecuta como script.
+  X-Content-Type-Options: nosniff
+
+  # === Política de Referrer ===
+  # No filtramos la URL completa a recursos cross-origin (anti tracking +
+  # evita fuga de tokens en query strings).
+  Referrer-Policy: strict-origin-when-cross-origin
+
+  # === Permisos del navegador ===
+  # Bloqueamos APIs sensibles. Si en algún momento añades chat de voz,
+  # tendrás que permitir microphone= (self).
+  Permissions-Policy: accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=(), interest-cohort=()
+
+  # === Anti-XSS legacy (Chrome lo ignora; lo mantenemos por Safari/IE) ===
+  X-XSS-Protection: 1; mode=block
+
+  # === Cross-Origin policies ===
+  # Aislamos la web del resto de orígenes para mitigar ataques Spectre-like
+  # y limitar comunicación entre ventanas/iframes.
+  Cross-Origin-Opener-Policy: same-origin
+  Cross-Origin-Resource-Policy: same-origin
+
+# Recursos estáticos versionados de Next.js: cache agresivo (un año, immutable)
+/_next/static/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Imágenes y fuentes en /public: cache moderado
+/*.svg
+  Cache-Control: public, max-age=86400
+/*.jpg
+  Cache-Control: public, max-age=86400
+/*.png
+  Cache-Control: public, max-age=86400
+/*.woff2
+  Cache-Control: public, max-age=31536000, immutable
