@@ -102,16 +102,38 @@ function json(status: number, body: unknown, origin: string | null): Response {
   return new Response(JSON.stringify(body), { status, headers })
 }
 
-export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
-  const origin = request.headers.get('Origin')
+// Normaliza una URL/origen para que pequeñas variaciones (slash final,
+// espacios, mayúsculas en el dominio) no rompan la comparación. Aceptamos
+// MÚLTIPLES orígenes separados por coma — útil para permitir
+// `pages.dev` y el dominio propio simultáneamente.
+function normalizeOrigin(s: string): string {
+  return s.trim().replace(/\/+$/, '').toLowerCase()
+}
+function parseAllowedOrigins(raw: string): string[] {
+  return raw.split(',').map(normalizeOrigin).filter(Boolean)
+}
 
-  // 1. CSRF defense: solo aceptamos POST desde nuestro origen.
-  //    Si ALLOWED_ORIGIN no está configurado, rechazamos en lugar de permitir todo.
+export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
+  const rawOrigin = request.headers.get('Origin')
+  const origin = rawOrigin ? normalizeOrigin(rawOrigin) : ''
+
+  // 1. CSRF defense: solo aceptamos POST desde un origen permitido.
+  //    Si ALLOWED_ORIGIN no está configurado, rechazamos (fail closed).
   if (!env.ALLOWED_ORIGIN) {
     return json(500, { ok: false, error: 'misconfigured' }, null)
   }
-  if (origin !== env.ALLOWED_ORIGIN) {
-    return json(403, { ok: false, error: 'forbidden' }, null)
+  const allowed = parseAllowedOrigins(env.ALLOWED_ORIGIN)
+  if (!origin || !allowed.includes(origin)) {
+    return json(
+      403,
+      {
+        ok: false,
+        error: 'forbidden',
+        // Pista útil solo para depurar el setup inicial (no filtra secretos).
+        debug: { receivedOrigin: rawOrigin, allowedOrigins: allowed },
+      },
+      null,
+    )
   }
 
   // 2. Content-Type obligatorio (mitiga form-based CSRF).
@@ -203,21 +225,19 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
 
 // Preflight CORS (por si en algún momento se llama desde un origen distinto).
 export const onRequestOptions: PagesFunction<Env> = async ({ request, env }) => {
-  const origin = request.headers.get('Origin')
-  if (!env.ALLOWED_ORIGIN || origin !== env.ALLOWED_ORIGIN) {
+  const rawOrigin = request.headers.get('Origin')
+  const origin = rawOrigin ? normalizeOrigin(rawOrigin) : ''
+  const allowed = env.ALLOWED_ORIGIN ? parseAllowedOrigins(env.ALLOWED_ORIGIN) : []
+  if (!origin || !allowed.includes(origin)) {
     return new Response(null, { status: 403 })
   }
   return new Response(null, {
     status: 204,
     headers: {
-      'Access-Control-Allow-Origin': origin,
+      'Access-Control-Allow-Origin': rawOrigin!,
       'Access-Control-Allow-Methods': 'POST, OPTIONS',
       'Access-Control-Allow-Headers': 'Content-Type',
       'Access-Control-Max-Age': '86400',
     },
   })
 }
-
-// Bloqueamos cualquier otro método.
-export const onRequest: PagesFunction<Env> = async () =>
-  new Response('Method Not Allowed', { status: 405, headers: { Allow: 'POST, OPTIONS' } })
