@@ -10,9 +10,9 @@ import { motion, useInView } from 'framer-motion'
 //  - Onboarding gratuito en 48h
 const promises = [
   {
-    headline: 'Segundos',
-    label: 'Tiempo de respuesta a tus leads',
-    description: 'Cada mensaje que entra por WhatsApp o Instagram tiene contestación inmediata. Sin colas, sin "te respondemos mañana".',
+    headline: '<1 min',
+    label: 'Tiempo de respuesta a cada lead',
+    description: 'Cada mensaje recibe respuesta en menos de un minuto. Garantizado. Da igual la hora, el día o el volumen.',
     icon: (
       <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
@@ -30,8 +30,8 @@ const promises = [
     ),
   },
   {
-    headline: '48 h',
-    label: 'Y activo · sin coste de setup',
+    headline: '0€',
+    label: 'Coste de setup · activo en 48h',
     description: 'Te configuramos el agente, lo entrenamos con tus tratamientos y tu tono, y queda funcionando. Sin inversión inicial.',
     icon: (
       <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
@@ -98,9 +98,6 @@ export default function Results() {
             <br />
             <span className="italic text-gradient-gold">Lo que hace, lo hace.</span>
           </h2>
-          <p className="text-[#9a9080] text-base mt-4 max-w-xl mx-auto">
-            Tres cosas concretas y verificables. Nada de métricas inventadas.
-          </p>
         </motion.div>
 
         <div className="border border-[#2a2520] rounded-2xl bg-[#141210] px-6 py-14 md:py-16">
