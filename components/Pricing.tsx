@@ -82,7 +82,10 @@ export default function Pricing({ onOpenModal }: PricingProps) {
               {/* Price */}
               <div className="mb-8 relative z-10">
                 <div className="flex items-baseline gap-2 mb-1">
-                  <span className="font-serif text-7xl font-semibold text-gradient-gold">349</span>
+                  {/* leading-[1.15] + pb-2: evita que el descendente del "9" se
+                      recorte por culpa del overflow-hidden del card y del
+                      line-height: 1 que Tailwind aplica por defecto a text-7xl. */}
+                  <span className="font-serif text-7xl font-semibold text-gradient-gold leading-[1.15] pb-2">349</span>
                   <span className="text-2xl text-[#9a9080] font-medium">€<span className="text-lg">/mes</span></span>
                 </div>
                 <p className="text-[#6b6258] text-sm">
@@ -157,7 +160,7 @@ export default function Pricing({ onOpenModal }: PricingProps) {
               {/* Price placeholder */}
               <div className="mb-8">
                 <div className="flex items-baseline gap-2 mb-1">
-                  <span className="font-serif text-5xl md:text-6xl font-semibold text-[#6b6258]">
+                  <span className="font-serif text-5xl md:text-6xl font-semibold text-[#6b6258] leading-[1.15] pb-1">
                     Próximamente
                   </span>
                 </div>
