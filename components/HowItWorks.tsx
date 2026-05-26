@@ -129,9 +129,10 @@ export default function HowItWorks() {
 
             <div className="space-y-5">
               {[
-                { num: '01', title: 'Respuesta inmediata', desc: 'En segundos, a cualquier hora. 24h, 7 días a la semana.' },
-                { num: '02', title: 'Cualificación con vocabulario estético', desc: 'Bótox, rellenos, rinomodelación, hilos tensores… el agente conoce el sector.' },
-                { num: '03', title: 'Cierre o transferencia inteligente', desc: 'Confirma citas directo en tu agenda o escala a tu equipo cuando es el momento.' },
+                { num: '01', title: 'Conecta tus 3 canales', desc: 'WhatsApp Business, Instagram DMs y tu formulario web (WordPress, Webflow o el que uses). Todo en un único flujo.' },
+                { num: '02', title: 'Respuesta inmediata', desc: 'En segundos, a cualquier hora. 24h, 7 días a la semana.' },
+                { num: '03', title: 'Cualificación con vocabulario estético', desc: 'Bótox, rellenos, rinomodelación, hilos tensores… el agente conoce el sector.' },
+                { num: '04', title: 'Cierre o transferencia inteligente', desc: 'Confirma citas directo en tu agenda o escala a tu equipo cuando es el momento.' },
               ].map((step) => (
                 <div key={step.num} className="flex gap-4">
                   <span className="font-serif text-2xl text-[#c9a96e]/40 font-medium w-8 flex-shrink-0">
@@ -164,7 +165,7 @@ export default function HowItWorks() {
                       A
                     </div>
                     <div>
-                      <p className="text-white text-sm font-medium">AsistIA · Clínica Belleza</p>
+                      <p className="text-white text-sm font-medium">Citalia · Clínica Belleza</p>
                       <p className="text-[#8696a0] text-[11px]">en línea</p>
                     </div>
                     <div className="ml-auto flex gap-4 text-[#8696a0]">

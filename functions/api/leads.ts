@@ -16,7 +16,7 @@
  * Variables de entorno requeridas (configurar en Cloudflare Pages):
  *  - TELEGRAM_BOT_TOKEN: token de tu bot (de @BotFather)
  *  - TELEGRAM_CHAT_ID:   tu chat_id (numérico)
- *  - ALLOWED_ORIGIN:     URL de origen permitida, p.ej. https://asistiapp.com
+ *  - ALLOWED_ORIGIN:     URL de origen permitida, p.ej. https://citaliaapp.com
  */
 
 interface Env {

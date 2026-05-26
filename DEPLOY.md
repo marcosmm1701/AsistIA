@@ -13,7 +13,7 @@
 ```bash
 git add .
 git commit -m "feat: initial AsistIA website"
-git remote add origin https://github.com/tu-usuario/asistia-web.git
+git remote add origin https://github.com/tu-usuario/citalia-web.git
 git push -u origin main
 ```
 
@@ -59,7 +59,7 @@ npm install -g wrangler
 wrangler login
 
 # 4. Despliega SOLO la carpeta /out (Pages estático)
-wrangler pages deploy out --project-name=asistia-web
+wrangler pages deploy out --project-name=citalia-web
 ```
 
 > ⚠️ Usa `wrangler pages deploy out`, NO `wrangler deploy`.
@@ -82,7 +82,7 @@ Con la Opción A, cada `git push` a `main` redespliega automáticamente.
 
 Con la Opción B:
 ```bash
-npm run build && wrangler pages deploy out --project-name=asistia-web
+npm run build && wrangler pages deploy out --project-name=citalia-web
 ```
 
 ---

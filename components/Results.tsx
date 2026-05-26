@@ -96,7 +96,7 @@ export default function Results() {
           <h2 className="font-serif text-4xl md:text-5xl font-semibold text-[#f5f0e8] leading-tight">
             Sin promesas vacías.
             <br />
-            <span className="italic text-gradient-gold">Lo que hace, lo hace.</span>
+            <span className="italic text-gradient-gold">Lo que dice, lo hace.</span>
           </h2>
         </motion.div>
 

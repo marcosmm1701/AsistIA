@@ -111,7 +111,7 @@ export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
       if (!res.ok) {
         // No mostramos detalles del backend al usuario (fail closed).
         setSubmitError(
-          'No hemos podido enviar tu solicitud. Inténtalo en unos minutos o escríbenos a hola@asistiapp.com',
+          'No hemos podido enviar tu solicitud. Inténtalo en unos minutos o escríbenos a hola@citaliaapp.com',
         )
         setSubmitting(false)
         return
@@ -121,7 +121,7 @@ export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
       setSubmitted(true)
     } catch {
       setSubmitError(
-        'Error de conexión. Comprueba tu red e inténtalo de nuevo, o escríbenos a hola@asistiapp.com',
+        'Error de conexión. Comprueba tu red e inténtalo de nuevo, o escríbenos a hola@citaliaapp.com',
       )
       setSubmitting(false)
     }
@@ -195,7 +195,7 @@ export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
                       </svg>
                     </div>
                     <p className="text-[#9a9080] text-sm leading-relaxed max-w-sm mx-auto">
-                      Hemos recibido tu solicitud. Un especialista de AsistIA te escribirá
+                      Hemos recibido tu solicitud. Un especialista de Citalia te escribirá
                       por WhatsApp en menos de 24 horas para acordar la demo.
                     </p>
                     <button

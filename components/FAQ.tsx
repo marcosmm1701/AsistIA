@@ -17,6 +17,10 @@ const faqs = [
     a: 'Sí. El agente se conecta a tu número de WhatsApp Business actual mediante la API oficial de WhatsApp. No necesitas cambiar de número ni de línea. La integración se realiza en menos de 48 horas sin que el número quede fuera de servicio.',
   },
   {
+    q: '¿Se integra con el formulario de mi web?',
+    a: 'Sí. Citalia conecta con el formulario de tu web independientemente de la plataforma: WordPress, Webflow, Squarespace, Shopify o un desarrollo a medida. Cada vez que alguien rellena tu formulario, el agente le contesta al instante por el canal que prefieras (email o WhatsApp si dejó número). Así centralizas las tres fuentes de leads — WhatsApp, Instagram y web — en un único flujo.',
+  },
+  {
     q: '¿Qué pasa si quiero cancelar?',
     a: 'Puedes cancelar en cualquier momento sin penalización. Sin permanencias ni letras pequeñas. Cuando cancelas, el agente deja de funcionar al final del periodo de facturación. Tus datos y conversaciones quedan disponibles durante 30 días antes de eliminarse.',
   },

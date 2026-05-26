@@ -12,7 +12,7 @@ const problems = [
     headline: '60%',
     title: 'de los mensajes llegan fuera de tu horario',
     description:
-      'Leads que escriben a las 22h, el domingo o en festivo. Sin respuesta, se van. Con AsistIA, cada mensaje tiene atención inmediata.',
+      'Leads que escriben a las 22h, el domingo o en festivo. Sin respuesta, se van. Con Citalia, cada mensaje tiene atención inmediata.',
     source: null,
     icon: (
       <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
@@ -36,7 +36,7 @@ const problems = [
     headline: '100%',
     title: 'del tiempo de tu equipo dedicado al paciente',
     description:
-      'Tu equipo no debería contestar WhatsApps mientras hace tratamientos. AsistIA atiende, cualifica y cierra. Ellos se centran en lo que hacen mejor.',
+      'Tu equipo no debería contestar WhatsApps mientras hace tratamientos. Citalia atiende, cualifica y cierra. Ellos se centran en lo que hacen mejor.',
     source: null,
     icon: (
       <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">

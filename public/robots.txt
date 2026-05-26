@@ -13,4 +13,4 @@ Disallow: /
 User-agent: PetalBot
 Disallow: /
 
-Sitemap: https://asistiapp.com/sitemap.xml
+Sitemap: https://citaliaapp.com/sitemap.xml

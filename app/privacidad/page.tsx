@@ -3,7 +3,7 @@ import Link from 'next/link'
 
 export const metadata: Metadata = {
   title: 'Política de Privacidad',
-  description: 'Política de privacidad y protección de datos del sitio web AsistIA. RGPD compliant.',
+  description: 'Política de privacidad y protección de datos del sitio web Citalia. RGPD compliant.',
 }
 
 export default function Privacidad() {
@@ -23,11 +23,11 @@ export default function Privacidad() {
             <h2 className="font-serif text-xl text-[#f5f0e8] mb-3">1. Responsable del tratamiento</h2>
             <ul className="space-y-1">
               <li><strong className="text-[#e8dcc8]">Responsable:</strong> Marcos Muñoz (persona física)</li>
-              <li><strong className="text-[#e8dcc8]">Email de contacto:</strong> hola@asistiapp.com</li>
-              <li><strong className="text-[#e8dcc8]">Sitio web:</strong> https://asistiapp.com</li>
+              <li><strong className="text-[#e8dcc8]">Email de contacto:</strong> hola@citaliaapp.com</li>
+              <li><strong className="text-[#e8dcc8]">Sitio web:</strong> https://citaliaapp.com</li>
             </ul>
             <p className="mt-3 text-[#6b6258]">
-              AsistIA se encuentra actualmente en fase de validación de producto. Esta
+              Citalia se encuentra actualmente en fase de validación de producto. Esta
               política se aplica a los datos personales tratados a través del formulario
               de contacto del sitio web.
             </p>
@@ -60,7 +60,7 @@ export default function Privacidad() {
               Los datos recabados se utilizan exclusivamente para:
             </p>
             <ul className="list-disc list-inside mt-2 space-y-1">
-              <li>Contactar al interesado en relación con la solicitud de demostración del servicio AsistIA.</li>
+              <li>Contactar al interesado en relación con la solicitud de demostración del servicio Citalia.</li>
               <li>Recoger feedback sobre el producto durante la fase de validación.</li>
             </ul>
             <p className="mt-3">
@@ -99,7 +99,7 @@ export default function Privacidad() {
 
           <section>
             <h2 className="font-serif text-xl text-[#f5f0e8] mb-3">6. Derechos del interesado</h2>
-            <p>Puedes ejercer los siguientes derechos enviando un email a hola@asistiapp.com:</p>
+            <p>Puedes ejercer los siguientes derechos enviando un email a hola@citaliaapp.com:</p>
             <ul className="list-disc list-inside mt-2 space-y-1">
               <li>Acceso a tus datos personales</li>
               <li>Rectificación de datos inexactos</li>

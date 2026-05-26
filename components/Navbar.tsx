@@ -39,7 +39,7 @@ export default function Navbar({ onOpenModal }: NavbarProps) {
         {/* Logo */}
         <a href="/" className="flex items-center gap-2">
           <span className="font-serif text-xl font-semibold text-gradient-gold">
-            AsistIA
+            Citalia
           </span>
           <span className="text-[10px] text-[#9a9080] font-medium tracking-widest uppercase mt-1">
             Medicina Estética

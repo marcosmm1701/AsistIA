@@ -3,7 +3,7 @@ import Link from 'next/link'
 
 export const metadata: Metadata = {
   title: 'Aviso Legal',
-  description: 'Aviso legal y condiciones de uso del sitio web AsistIA.',
+  description: 'Aviso legal y condiciones de uso del sitio web Citalia.',
 }
 
 export default function AvisoLegal() {
@@ -29,11 +29,11 @@ export default function AvisoLegal() {
             <ul className="list-none mt-3 space-y-1">
               <li><strong className="text-[#e8dcc8]">Titular:</strong> Marcos Muñoz</li>
               <li><strong className="text-[#e8dcc8]">Naturaleza:</strong> Persona física</li>
-              <li><strong className="text-[#e8dcc8]">Sitio web:</strong> https://asistiapp.com</li>
-              <li><strong className="text-[#e8dcc8]">Email de contacto:</strong> hola@asistiapp.com</li>
+              <li><strong className="text-[#e8dcc8]">Sitio web:</strong> https://citaliaapp.com</li>
+              <li><strong className="text-[#e8dcc8]">Email de contacto:</strong> hola@citaliaapp.com</li>
             </ul>
             <p className="mt-4 text-[#6b6258]">
-              AsistIA es un proyecto en fase de validación. Actualmente no constituye una
+              Citalia es un proyecto en fase de validación. Actualmente no constituye una
               actividad económica formalizada (no S.L., no autónomo dado de alta).
               Cualquier servicio prestado durante esta etapa tiene carácter piloto y queda
               sujeto a la formalización societaria que se realice cuando el proyecto pase a
@@ -44,7 +44,7 @@ export default function AvisoLegal() {
           <section>
             <h2 className="font-serif text-xl text-[#f5f0e8] mb-3">2. Objeto</h2>
             <p>
-              Este aviso legal regula el acceso y uso del sitio web asistiapp.com. La
+              Este aviso legal regula el acceso y uso del sitio web citaliaapp.com. La
               navegación por este sitio implica la aceptación plena de estas condiciones.
             </p>
           </section>

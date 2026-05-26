@@ -24,10 +24,10 @@ const playfair = Playfair_Display({
 })
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://asistiapp.com'),
+  metadataBase: new URL('https://citaliaapp.com'),
   title: {
-    default: 'AsistIA — Agente IA para Clínicas de Medicina Estética',
-    template: '%s | AsistIA',
+    default: 'Citalia — Agente IA para Clínicas de Medicina Estética',
+    template: '%s | Citalia',
   },
   description:
     'El primer agente de IA especializado en medicina estética que convierte leads de WhatsApp e Instagram en pacientes, 24/7. Primer mes gratis. Activo en 48h.',
@@ -39,21 +39,21 @@ export const metadata: Metadata = {
     'automatización leads estética',
     'inteligencia artificial clínica',
   ],
-  authors: [{ name: 'AsistIA', url: 'https://asistiapp.com' }],
-  creator: 'AsistIA',
+  authors: [{ name: 'Citalia', url: 'https://citaliaapp.com' }],
+  creator: 'Citalia',
   openGraph: {
     type: 'website',
     locale: 'es_ES',
-    url: 'https://asistiapp.com',
-    siteName: 'AsistIA',
-    title: 'AsistIA — Tu clínica vende mientras tú duermes',
+    url: 'https://citaliaapp.com',
+    siteName: 'Citalia',
+    title: 'Citalia — Tu clínica vende mientras tú duermes',
     description:
       'Agente IA especializado en medicina estética. Convierte leads de WhatsApp e Instagram en pacientes a cualquier hora. Primer mes gratis.',
     // La imagen OG la genera /app/opengraph-image.tsx automáticamente.
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'AsistIA — Tu clínica vende mientras tú duermes',
+    title: 'Citalia — Tu clínica vende mientras tú duermes',
     description:
       'Agente IA especializado en medicina estética. Convierte leads de WhatsApp en pacientes 24/7.',
   },
@@ -91,13 +91,13 @@ export default function RootLayout({
             __html: JSON.stringify({
               '@context': 'https://schema.org',
               '@type': 'SoftwareApplication',
-              name: 'AsistIA',
+              name: 'Citalia',
               applicationCategory: 'BusinessApplication',
               description:
                 'Agente de IA conversacional especializado en medicina estética. Atiende leads por WhatsApp e Instagram 24/7.',
               offers: {
                 '@type': 'Offer',
-                price: '249',
+                price: '349',
                 priceCurrency: 'EUR',
                 priceSpecification: {
                   '@type': 'UnitPriceSpecification',
@@ -106,8 +106,8 @@ export default function RootLayout({
               },
               provider: {
                 '@type': 'Organization',
-                name: 'AsistIA',
-                url: 'https://asistiapp.com',
+                name: 'Citalia',
+                url: 'https://citaliaapp.com',
                 areaServed: {
                   '@type': 'Country',
                   name: 'España',
@@ -115,7 +115,7 @@ export default function RootLayout({
                 contactPoint: {
                   '@type': 'ContactPoint',
                   contactType: 'customer service',
-                  email: 'hola@asistiapp.com',
+                  email: 'hola@citaliaapp.com',
                   availableLanguage: 'Spanish',
                 },
               },

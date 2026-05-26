@@ -9,7 +9,7 @@ Esta guía te lleva de cero a "las leads me suenan en el móvil al instante" en 
 1. Abre Telegram en el móvil
 2. Busca **@BotFather** (el oficial, con el ✓ azul)
 3. Envía `/newbot`
-4. Cuando te pida un nombre: `AsistIA Leads` (o el que quieras)
+4. Cuando te pida un nombre: `Citalia Leads` (o el que quieras)
 5. Cuando te pida un username: tiene que acabar en `bot`, por ejemplo `asistia_leads_bot`
 6. **BotFather te devuelve un token** del estilo:
    ```
@@ -129,4 +129,4 @@ En **menos de 2 segundos** debes recibir un mensaje en Telegram tipo:
 
 ## Cuando tengas dominio propio
 
-Cuando vincules `asistiapp.com` (o el que sea), **acuérdate de actualizar `ALLOWED_ORIGIN`** en las variables de entorno, o el formulario empezará a devolver 403 desde el nuevo dominio.
+Cuando vincules `citaliaapp.com` (o el que sea), **acuérdate de actualizar `ALLOWED_ORIGIN`** en las variables de entorno, o el formulario empezará a devolver 403 desde el nuevo dominio.

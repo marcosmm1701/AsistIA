@@ -7,7 +7,7 @@ export default function Footer() {
         <div className="flex flex-col md:flex-row items-center md:items-start justify-between gap-8">
           {/* Logo + tagline */}
           <div>
-            <span className="font-serif text-xl font-semibold text-gradient-gold">AsistIA</span>
+            <span className="font-serif text-xl font-semibold text-gradient-gold">Citalia</span>
             <p className="text-[#6b6258] text-xs mt-1 max-w-[200px]">
               Agente IA especializado en medicina estética
             </p>
@@ -29,13 +29,13 @@ export default function Footer() {
           {/* Contact + Social */}
           <div className="flex items-center gap-4">
             <a
-              href="mailto:hola@asistiapp.com"
+              href="mailto:hola@citaliaapp.com"
               className="text-[#6b6258] hover:text-[#9a9080] transition-colors text-sm"
             >
-              hola@asistiapp.com
+              hola@citaliaapp.com
             </a>
             <a
-              href="https://instagram.com/asistiapp"
+              href="https://instagram.com/citaliaapp"
               target="_blank"
               rel="noopener noreferrer"
               className="text-[#6b6258] hover:text-[#c9a96e] transition-colors"
@@ -51,7 +51,7 @@ export default function Footer() {
         {/* Bottom */}
         <div className="border-t border-[#2a2520] mt-8 pt-6 text-center">
           <p className="text-[#6b6258] text-xs">
-            © {currentYear} AsistIA · Todos los derechos reservados · Hecho en España
+            © {currentYear} Citalia · Todos los derechos reservados · Hecho en España
           </p>
         </div>
       </div>

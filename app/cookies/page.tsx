@@ -3,7 +3,7 @@ import Link from 'next/link'
 
 export const metadata: Metadata = {
   title: 'Política de Cookies',
-  description: 'Política de cookies del sitio web AsistIA. No utilizamos cookies de seguimiento.',
+  description: 'Política de cookies del sitio web Citalia. No utilizamos cookies de seguimiento.',
 }
 
 export default function Cookies() {
@@ -86,8 +86,8 @@ export default function Cookies() {
             <h2 className="font-serif text-xl text-[#f5f0e8] mb-3">5. Contacto</h2>
             <p>
               Si tienes preguntas sobre esta política, escríbenos a{' '}
-              <a href="mailto:hola@asistiapp.com" className="text-[#c9a96e] hover:underline">
-                hola@asistiapp.com
+              <a href="mailto:hola@citaliaapp.com" className="text-[#c9a96e] hover:underline">
+                hola@citaliaapp.com
               </a>.
             </p>
           </section>
