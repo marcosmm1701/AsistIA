@@ -33,6 +33,10 @@ const LEAD_LABELS: Record<string, string> = {
   'mas-100': 'Más de 100',
 }
 
+// Allow-list de intents. Cualquier valor fuera de esto cae a 'demo'.
+const INTENT_OPTIONS = ['demo', 'pro-waitlist'] as const
+type Intent = typeof INTENT_OPTIONS[number]
+
 // Caracteres de control que pueden romper o inyectar en cualquier
 // downstream (logs, emails, mensajes). Los reemplazamos por espacio.
 function sanitize(value: unknown, maxLen: number): string {
@@ -41,8 +45,8 @@ function sanitize(value: unknown, maxLen: number): string {
 }
 
 type Validated =
-  | { ok: true; safe: Record<string, string>; isSpam: false }
-  | { ok: true; safe: null; isSpam: true }
+  | { ok: true; safe: Record<string, string>; intent: Intent; isSpam: false }
+  | { ok: true; safe: null; intent: null; isSpam: true }
   | { ok: false; error: string }
 
 function validate(data: unknown): Validated {
@@ -53,8 +57,14 @@ function validate(data: unknown): Validated {
 
   // Honeypot: bots rellenan campos ocultos. Silenciamos para no avisarles.
   if (typeof d.website === 'string' && d.website.length > 0) {
-    return { ok: true, safe: null, isSpam: true }
+    return { ok: true, safe: null, intent: null, isSpam: true }
   }
+
+  // Resolución del intent con allow-list. Si llega algo raro o nada,
+  // tratamos como 'demo' (comportamiento por defecto, fail-safe).
+  const intent: Intent = (INTENT_OPTIONS as readonly string[]).includes(d.intent as string)
+    ? (d.intent as Intent)
+    : 'demo'
 
   const safe = {
     nombre: sanitize(d.nombre, 60),
@@ -89,7 +99,7 @@ function validate(data: unknown): Validated {
     return { ok: false, error: 'invalid_leads' }
   }
 
-  return { ok: true, safe, isSpam: false }
+  return { ok: true, safe, intent, isSpam: false }
 }
 
 function json(status: number, body: unknown, origin: string | null): Response {
@@ -158,7 +168,7 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
     return json(200, { ok: true }, origin)
   }
 
-  const { safe } = result
+  const { safe, intent } = result
 
   // 6. Verificar configuración del bot ANTES de procesar (fail closed).
   if (!env.TELEGRAM_BOT_TOKEN || !env.TELEGRAM_CHAT_ID) {
@@ -167,9 +177,16 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
 
   // 7. Mensaje en texto plano (sin parse_mode → no necesita escapado de
   //    caracteres especiales; cualquier contenido del usuario es seguro
-  //    porque Telegram lo trata como texto literal).
+  //    porque Telegram lo trata como texto literal). El header cambia
+  //    según el intent para distinguir de un vistazo qué tipo de solicitud
+  //    es (demo vs lista de espera del Plan Pro).
+  const header =
+    intent === 'pro-waitlist'
+      ? '🚀 PLAN PRO · LISTA DE ESPERA'
+      : '🎯 NUEVA DEMO SOLICITADA'
+
   const lines = [
-    '🎯 NUEVA DEMO SOLICITADA',
+    header,
     '',
     `👤 Nombre: ${safe.nombre}`,
     `🏥 Clínica: ${safe.clinica}`,

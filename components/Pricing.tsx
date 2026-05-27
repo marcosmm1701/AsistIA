@@ -5,6 +5,7 @@ import { useRef } from 'react'
 
 interface PricingProps {
   onOpenModal: () => void
+  onOpenProWaitlist: () => void
 }
 
 // Plan disponible hoy
@@ -29,7 +30,7 @@ const proFeatures = [
   { text: 'Outbound de reactivación de pacientes inactivos', highlight: false },
 ]
 
-export default function Pricing({ onOpenModal }: PricingProps) {
+export default function Pricing({ onOpenModal, onOpenProWaitlist }: PricingProps) {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: '-80px' })
 
@@ -202,7 +203,7 @@ export default function Pricing({ onOpenModal }: PricingProps) {
 
               {/* CTA secundario — el modal sirve también para "avisarme cuando salga" */}
               <button
-                onClick={onOpenModal}
+                onClick={onOpenProWaitlist}
                 className="w-full border border-[#2a2520] hover:border-[#c9a96e]/40 text-[#9a9080] hover:text-[#f5f0e8] font-medium py-4 rounded-2xl text-base transition-all duration-200"
               >
                 Avísame cuando esté listo

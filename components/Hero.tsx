@@ -4,9 +4,10 @@ import { motion } from 'framer-motion'
 
 interface HeroProps {
   onOpenModal: () => void
+  onOpenVideo: () => void
 }
 
-export default function Hero({ onOpenModal }: HeroProps) {
+export default function Hero({ onOpenModal, onOpenVideo }: HeroProps) {
   return (
     // pt-* solo en portátiles cortos (ancho >= 768px y alto <= 900px) para
     // que el badge no quede pisado por la navbar fija. En móvil y en
@@ -85,12 +86,16 @@ export default function Hero({ onOpenModal }: HeroProps) {
             <span className="ml-2 inline-block transition-transform group-hover:translate-x-0.5">→</span>
           </button>
 
-          <a
-            href="#como-funciona"
-            className="w-full sm:w-auto border border-[#2a2520] hover:border-[#c9a96e]/40 text-[#9a9080] hover:text-[#f5f0e8] font-medium px-8 py-4 rounded-full text-base transition-all duration-200"
+          <button
+            onClick={onOpenVideo}
+            className="group w-full sm:w-auto border border-[#2a2520] hover:border-[#c9a96e]/40 text-[#9a9080] hover:text-[#f5f0e8] font-medium px-8 py-4 rounded-full text-base transition-all duration-200 inline-flex items-center justify-center gap-2"
           >
-            Ver cómo funciona
-          </a>
+            {/* Icono play — refuerza visualmente que abre un vídeo */}
+            <svg className="w-4 h-4 fill-current opacity-70 group-hover:opacity-100 transition-opacity" viewBox="0 0 24 24">
+              <path d="M8 5v14l11-7z" />
+            </svg>
+            Ver demo · 1 min
+          </button>
         </motion.div>
 
         {/* Social proof */}

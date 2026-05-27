@@ -11,24 +11,39 @@ import Pricing from '@/components/Pricing'
 import FAQ from '@/components/FAQ'
 import CTAFinal from '@/components/CTAFinal'
 import Footer from '@/components/Footer'
-import DemoModal from '@/components/DemoModal'
+import DemoModal, { type ModalIntent } from '@/components/DemoModal'
+import VideoModal from '@/components/VideoModal'
 
 export default function Home() {
-  const [modalOpen, setModalOpen] = useState(false)
+  // null = cerrado. Cuando se abre, guardamos el intent que disparó la
+  // apertura para que el modal y el aviso a Telegram sean coherentes.
+  const [modalIntent, setModalIntent] = useState<ModalIntent | null>(null)
+  const [videoOpen, setVideoOpen] = useState(false)
+
+  const openDemo = () => setModalIntent('demo')
+  const openProWaitlist = () => setModalIntent('pro-waitlist')
+  const closeModal = () => setModalIntent(null)
+  const openVideo = () => setVideoOpen(true)
+  const closeVideo = () => setVideoOpen(false)
 
   return (
     <main>
-      <Navbar onOpenModal={() => setModalOpen(true)} />
-      <Hero onOpenModal={() => setModalOpen(true)} />
+      <Navbar onOpenModal={openDemo} />
+      <Hero onOpenModal={openDemo} onOpenVideo={openVideo} />
       <Problems />
       <HowItWorks />
       <Results />
       <ForWho />
-      <Pricing onOpenModal={() => setModalOpen(true)} />
+      <Pricing onOpenModal={openDemo} onOpenProWaitlist={openProWaitlist} />
       <FAQ />
-      <CTAFinal onOpenModal={() => setModalOpen(true)} />
+      <CTAFinal onOpenModal={openDemo} />
       <Footer />
-      <DemoModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />
+      <DemoModal
+        isOpen={modalIntent !== null}
+        intent={modalIntent ?? 'demo'}
+        onClose={closeModal}
+      />
+      <VideoModal isOpen={videoOpen} onClose={closeVideo} />
     </main>
   )
 }

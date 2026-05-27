@@ -24,12 +24,50 @@ function sanitizeField(value: string, maxLen: number): string {
 
 const LEAD_OPTIONS = ['menos-20', '20-50', '50-100', 'mas-100'] as const
 
+// Distingue qué CTA abrió el modal. Esto cambia copy del modal Y formato
+// del mensaje que llega a Telegram (ver functions/api/leads.ts).
+export type ModalIntent = 'demo' | 'pro-waitlist'
+
 interface DemoModalProps {
   isOpen: boolean
   onClose: () => void
+  intent?: ModalIntent
 }
 
-export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
+// Copy por intent. Todo lo visible al usuario centralizado aquí.
+const COPY: Record<ModalIntent, {
+  title: string
+  subtitle: string
+  submit: string
+  submitting: string
+  successTitle: string
+  successSubtitle: string
+  successBody: string
+}> = {
+  'demo': {
+    title: 'Solicita tu demo gratuita',
+    subtitle: 'Sin compromiso · Primer mes completamente gratis',
+    submit: 'Solicitar demo gratuita →',
+    submitting: 'Enviando…',
+    successTitle: '¡Perfecto! 🎉',
+    successSubtitle: 'Te contactamos en menos de 24 horas',
+    successBody:
+      'Hemos recibido tu solicitud. Te escribimos por WhatsApp en menos de 24 horas para acordar la demo.',
+  },
+  'pro-waitlist': {
+    title: 'Únete a la lista de espera',
+    subtitle: 'Te avisamos en cuanto el Plan Pro esté disponible',
+    submit: 'Apuntarme a la lista →',
+    submitting: 'Apuntando…',
+    successTitle: '¡Apuntado! 🚀',
+    successSubtitle: 'Serás de los primeros en saberlo',
+    successBody:
+      'Estás en la lista. Te avisaremos por WhatsApp en cuanto el Plan Pro esté operativo, con condiciones especiales para early-adopters.',
+  },
+}
+
+export default function DemoModal({ isOpen, onClose, intent = 'demo' }: DemoModalProps) {
+  const copy = COPY[intent]
   const [submitted, setSubmitted] = useState(false)
   const [submitting, setSubmitting] = useState(false)
   const [submitError, setSubmitError] = useState<string | null>(null)
@@ -101,11 +139,13 @@ export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
 
     // POST al endpoint propio (Cloudflare Pages Function en /api/leads).
     // El token de Telegram vive ahí, NUNCA en el navegador.
+    // Incluimos `intent` para que el servidor formatee el aviso de Telegram
+    // de forma distinta (demo vs lista de espera del Plan Pro).
     try {
       const res = await fetch('/api/leads', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(safe),
+        body: JSON.stringify({ ...safe, intent }),
       })
 
       if (!res.ok) {
@@ -166,12 +206,10 @@ export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
               <div className="flex items-start justify-between p-8 pb-0">
                 <div>
                   <h2 id="demo-modal-title" className="font-serif text-2xl font-semibold text-[#f5f0e8] mb-1">
-                    {submitted ? '¡Perfecto! 🎉' : 'Solicita tu demo gratuita'}
+                    {submitted ? copy.successTitle : copy.title}
                   </h2>
                   <p className="text-[#9a9080] text-sm">
-                    {submitted
-                      ? 'Te contactamos en menos de 24 horas'
-                      : 'Sin compromiso · Primer mes completamente gratis'}
+                    {submitted ? copy.successSubtitle : copy.subtitle}
                   </p>
                 </div>
                 <button
@@ -195,8 +233,7 @@ export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
                       </svg>
                     </div>
                     <p className="text-[#9a9080] text-sm leading-relaxed max-w-sm mx-auto">
-                      Hemos recibido tu solicitud. Un especialista de Citalia te escribirá
-                      por WhatsApp en menos de 24 horas para acordar la demo.
+                      {copy.successBody}
                     </p>
                     <button
                       onClick={handleClose}
@@ -385,7 +422,7 @@ export default function DemoModal({ isOpen, onClose }: DemoModalProps) {
                       disabled={submitting}
                       className="w-full bg-[#c9a96e] hover:bg-[#dbbe8a] disabled:opacity-60 text-[#0f0e0d] font-semibold py-4 rounded-xl text-base transition-all duration-200 mt-2"
                     >
-                      {submitting ? 'Enviando…' : 'Solicitar demo gratuita →'}
+                      {submitting ? copy.submitting : copy.submit}
                     </button>
                   </form>
                 )}
