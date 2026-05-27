@@ -7,25 +7,26 @@ interface PricingProps {
   onOpenModal: () => void
 }
 
-// Plan disponible hoy — atención por texto (WhatsApp + Instagram + formulario web)
-const textFeatures = [
+// Plan disponible hoy
+const esencialFeatures = [
   { text: 'Primer mes completamente gratis', highlight: true },
-  { text: 'Sin permanencia — cancela cuando quieras', highlight: false },
-  { text: 'Setup e integración incluidos (48h)', highlight: false },
-  { text: 'WhatsApp Business + Instagram DMs', highlight: false },
-  { text: 'Integración con tu formulario web (WordPress, Webflow…)', highlight: false },
-  { text: 'Personalización de respuestas a tu clínica', highlight: false },
-  { text: 'Soporte dedicado por WhatsApp', highlight: false },
-  { text: 'Panel de conversaciones y métricas', highlight: false },
+  { text: 'WhatsApp Business (1 número)', highlight: false },
+  { text: 'Instagram DMs (1 cuenta)', highlight: false },
+  { text: 'Formularios web (todos)', highlight: false },
+  { text: 'Hasta 500 conversaciones/mes', highlight: false },
+  { text: 'Dashboard básico', highlight: false },
+  { text: 'Setup en 7-10 días', highlight: false },
+  { text: 'Soporte WhatsApp directo conmigo', highlight: false },
 ]
 
-// Plan futuro — atención por voz (llamadas telefónicas)
-const voiceFeatures = [
-  { text: 'Todo lo del plan Texto', highlight: false },
-  { text: 'Atención de llamadas entrantes 24/7', highlight: false },
-  { text: 'Confirmación y reprogramación de citas por voz', highlight: false },
-  { text: 'Recordatorios automáticos por teléfono', highlight: false },
-  { text: 'Voz natural en español', highlight: false },
+// Plan futuro — precio definido pero aún no operativo (próximamente)
+const proFeatures = [
+  { text: 'Todo lo del plan Esencial', highlight: true },
+  { text: 'Agente de voz para llamadas entrantes (hasta 300 min/mes)', highlight: false },
+  { text: 'Hasta 1.500 conversaciones/mes', highlight: false },
+  { text: 'Dashboard avanzado con métricas de conversión', highlight: false },
+  { text: 'Múltiples doctores/agendas', highlight: false },
+  { text: 'Outbound de reactivación de pacientes inactivos', highlight: false },
 ]
 
 export default function Pricing({ onOpenModal }: PricingProps) {
@@ -75,7 +76,7 @@ export default function Pricing({ onOpenModal }: PricingProps) {
               {/* Plan name */}
               <div className="mb-2 relative z-10">
                 <span className="text-xs text-[#c9a96e] font-medium tracking-widest uppercase">
-                  Citalia · Texto
+                  Plan Esencial
                 </span>
               </div>
 
@@ -98,7 +99,7 @@ export default function Pricing({ onOpenModal }: PricingProps) {
 
               {/* Features */}
               <ul className="space-y-4 mb-8 flex-grow">
-                {textFeatures.map((feature, i) => (
+                {esencialFeatures.map((feature, i) => (
                   <li key={i} className="flex items-start gap-3">
                     <span
                       className={`w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 ${
@@ -136,13 +137,13 @@ export default function Pricing({ onOpenModal }: PricingProps) {
             </div>
           </motion.div>
 
-          {/* === Plan VOZ (próximamente) === */}
+          {/* === Plan PRO (próximamente) === */}
           <motion.div
             initial={{ opacity: 0, y: 30, scale: 0.97 }}
             animate={isInView ? { opacity: 1, y: 0, scale: 1 } : {}}
             transition={{ duration: 0.7, delay: 0.3 }}
           >
-            <div className="relative border border-dashed border-[#2a2520] rounded-3xl p-8 md:p-10 bg-[#0f0e0d] overflow-hidden h-full flex flex-col">
+            <div className="relative border border-dashed border-[#3a352e] rounded-3xl p-8 md:p-10 bg-[#0f0e0d] overflow-hidden h-full flex flex-col">
               {/* Badge */}
               <div className="absolute top-6 right-6">
                 <span className="bg-[#2a2520] text-[#c9a96e] text-xs font-bold px-3 py-1 rounded-full border border-[#c9a96e]/30">
@@ -151,21 +152,22 @@ export default function Pricing({ onOpenModal }: PricingProps) {
               </div>
 
               {/* Plan name */}
-              <div className="mb-2">
-                <span className="text-xs text-[#6b6258] font-medium tracking-widest uppercase">
-                  Citalia · Voz
+              <div className="mb-2 relative z-10">
+                <span className="text-xs text-[#c9a96e]/70 font-medium tracking-widest uppercase">
+                  Plan Pro
                 </span>
               </div>
 
-              {/* Price placeholder */}
-              <div className="mb-8">
+              {/* Price — mostramos el precio real (549€) pero ligeramente más
+                  apagado que el plan Esencial para señalar que no es contratable
+                  todavía. El badge "Próximamente" arriba lleva el peso. */}
+              <div className="mb-8 relative z-10">
                 <div className="flex items-baseline gap-2 mb-1">
-                  <span className="font-serif text-5xl md:text-6xl font-semibold text-[#6b6258] leading-[1.15] pb-1">
-                    Próximamente
-                  </span>
+                  <span className="font-serif text-7xl font-semibold text-[#c9a96e]/80 leading-[1.15] pb-2">549</span>
+                  <span className="text-2xl text-[#6b6258] font-medium">€<span className="text-lg">/mes</span></span>
                 </div>
                 <p className="text-[#6b6258] text-sm">
-                  Citalia que también atiende y gestiona citas por llamada telefónica
+                  Disponible próximamente · precio orientativo
                 </p>
               </div>
 
@@ -174,14 +176,24 @@ export default function Pricing({ onOpenModal }: PricingProps) {
 
               {/* Features */}
               <ul className="space-y-4 mb-8 flex-grow">
-                {voiceFeatures.map((feature, i) => (
+                {proFeatures.map((feature, i) => (
                   <li key={i} className="flex items-start gap-3">
-                    <span className="w-5 h-5 rounded-full bg-[#2a2520] border border-[#3a352e] flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <svg className="w-3 h-3 text-[#6b6258]" fill="currentColor" viewBox="0 0 20 20">
+                    <span
+                      className={`w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 ${
+                        feature.highlight
+                          ? 'bg-[#c9a96e]/70 text-[#0f0e0d]'
+                          : 'bg-[#2a2520] border border-[#3a352e]'
+                      }`}
+                    >
+                      <svg className={`w-3 h-3 ${feature.highlight ? 'text-[#0f0e0d]' : 'text-[#9a9080]'}`} fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                       </svg>
                     </span>
-                    <span className="text-sm leading-relaxed text-[#6b6258]">
+                    <span
+                      className={`text-sm leading-relaxed ${
+                        feature.highlight ? 'text-[#c9a96e] font-medium' : 'text-[#9a9080]'
+                      }`}
+                    >
                       {feature.text}
                     </span>
                   </li>
@@ -197,7 +209,7 @@ export default function Pricing({ onOpenModal }: PricingProps) {
               </button>
 
               <p className="text-center text-xs text-[#6b6258] mt-4">
-                Te escribimos en cuanto abramos el plan Voz
+                Te escribimos en cuanto abramos el Plan Pro
               </p>
             </div>
           </motion.div>
