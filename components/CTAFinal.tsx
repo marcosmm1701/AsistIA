@@ -48,7 +48,8 @@ export default function CTAFinal({ onOpenModal }: CTAFinalProps) {
             <p className="text-[#9a9080] text-lg max-w-lg mx-auto mb-10 leading-relaxed">
               Citalia está abriendo plazas para clínicas piloto en Madrid y Barcelona.
               A cambio de tu feedback en los primeros meses, te quedas con tarifa
-              fundadora de por vida. Primer mes gratis, sin permanencia.
+              fundadora de por vida, además de un 30% de descuento en los primeros 6 meses.
+                              Primer mes gratis, sin permanencia.
             </p>
 
             {/* CTA */}
