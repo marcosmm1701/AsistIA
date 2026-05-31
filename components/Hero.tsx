@@ -94,7 +94,7 @@ export default function Hero({ onOpenModal, onOpenVideo }: HeroProps) {
             <svg className="w-4 h-4 fill-current opacity-70 group-hover:opacity-100 transition-opacity" viewBox="0 0 24 24">
               <path d="M8 5v14l11-7z" />
             </svg>
-            Ver demo · 1 min
+            Ver Vídeo · 1 min
           </button>
         </motion.div>
 
